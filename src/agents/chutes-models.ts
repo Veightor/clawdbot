@@ -15,6 +15,14 @@ export interface ChutesModelEntry {
 }
 
 export async function fetchChutesModels(): Promise<ChutesModelEntry[]> {
+  // Skip dynamic fetching in test environments to avoid network issues and timeouts
+  if (
+    process.env.VITEST ||
+    process.env.NODE_ENV === "test" ||
+    process.env.CLAWDBOT_SKIP_DYNAMIC_MODELS === "1"
+  ) {
+    return [];
+  }
   try {
     const response = await fetch(`${CHUTES_BASE_URL}/models`, {
       signal: AbortSignal.timeout(5000),
