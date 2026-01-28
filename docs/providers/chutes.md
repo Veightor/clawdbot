@@ -1,12 +1,12 @@
 ---
-summary: "Use Chutes AI with Clawdbot"
+summary: "Use Chutes AI with Moltbot"
 read_when:
-  - You want to use Chutes AI models in Clawdbot
+  - You want to use Chutes AI models in Moltbot
   - You need to configure Chutes via OAuth or API key
 ---
 # Chutes AI
 
-Chutes provides high-performance inference for open-weight models, including GLM 4.7 Flash. Clawdbot supports Chutes via both OAuth and API key authentication.
+Chutes provides high-performance inference for open-weight models, including GLM 4.7 Flash. Moltbot supports Chutes via both OAuth and API key authentication.
 
 Models are fetched dynamically from the Chutes API, ensuring you always have access to the latest models, accurate pricing, and context window limits.
 
@@ -15,22 +15,22 @@ Models are fetched dynamically from the Chutes API, ensuring you always have acc
 To configure Chutes with an API key:
 
 ```bash
-clawdbot onboard --auth-choice chutes-api-key
+moltbot onboard --auth-choice chutes-api-key
 # or non-interactive
-clawdbot onboard --chutes-api-key "$CHUTES_API_KEY"
+moltbot onboard --chutes-api-key "$CHUTES_API_KEY"
 ```
 
 To configure Chutes with OAuth (browser-based):
 
 ```bash
-clawdbot onboard --auth-choice chutes
+moltbot onboard --auth-choice chutes
 ```
 
-OAuth allows you to use your Chutes account without manually managing API keys. Clawdbot uses the standard [Sign in with Chutes](https://github.com/chutesai/Sign-in-with-Chutes) flow.
+OAuth allows you to use your Chutes account without manually managing API keys. Moltbot uses the standard [Sign in with Chutes](https://github.com/chutesai/Sign-in-with-Chutes) flow.
 
 ### OAuth Scopes
 
-Clawdbot requests the following scopes by default:
+Moltbot requests the following scopes by default:
 - `openid` (Required for authentication)
 - `profile` (Access to username)
 - `chutes:invoke` (Required to make AI API calls on your behalf)
