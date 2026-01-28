@@ -9,8 +9,8 @@ import Testing
         let plist: [String: Any] = [
             "ProgramArguments": ["moltbot", "gateway-daemon", "--port", "18789", "--bind", "loopback"],
             "EnvironmentVariables": [
-                "CLAWDBOT_GATEWAY_TOKEN": " secret ",
-                "CLAWDBOT_GATEWAY_PASSWORD": "pw",
+                "MOLTBOT_GATEWAY_TOKEN": " secret ",
+                "MOLTBOT_GATEWAY_PASSWORD": "pw",
             ],
         ]
         let data = try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)

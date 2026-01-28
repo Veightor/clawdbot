@@ -24,7 +24,7 @@ By default, the Gateway writes a rolling log file under:
 
 The date uses the gateway host's local timezone.
 
-You can override this in `~/.clawdbot/moltbot.json`:
+You can override this in `~/.moltbot/moltbot.json`:
 
 ```json
 {
@@ -97,7 +97,7 @@ Console formatting is controlled by `logging.consoleStyle`.
 
 ## Configuring logging
 
-All logging configuration lives under `logging` in `~/.clawdbot/moltbot.json`.
+All logging configuration lives under `logging` in `~/.moltbot/moltbot.json`.
 
 ```json
 {
@@ -208,7 +208,7 @@ Flags are case-insensitive and support wildcards (e.g. `telegram.*` or `*`).
 Env override (one-off):
 
 ```
-CLAWDBOT_DIAGNOSTICS=telegram.http,telegram.payload
+MOLTBOT_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 Notes:

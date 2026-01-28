@@ -10,7 +10,7 @@ read_when:
 Last updated: 2026-01-01
 
 ## TL;DR
-- **Tailoring lives outside the repo:** `~/clawd` (workspace) + `~/.clawdbot/moltbot.json` (config).
+- **Tailoring lives outside the repo:** `~/clawd` (workspace) + `~/.moltbot/moltbot.json` (config).
 - **Stable workflow:** install the macOS app; let it run the bundled Gateway.
 - **Bleeding edge workflow:** run the Gateway yourself via `pnpm gateway:watch`, then let the macOS app attach in Local mode.
 
@@ -23,7 +23,7 @@ Last updated: 2026-01-01
 
 If you want “100% tailored to me” *and* easy updates, keep your customization in:
 
-- **Config:** `~/.clawdbot/moltbot.json` (JSON/JSON5-ish)
+- **Config:** `~/.moltbot/moltbot.json` (JSON/JSON5-ish)
 - **Workspace:** `~/clawd` (skills, prompts, memories; make it a private git repo)
 
 Bootstrap once:
@@ -100,26 +100,26 @@ moltbot health
 ### Common footguns
 - **Wrong port:** Gateway WS defaults to `ws://127.0.0.1:18789`; keep app + CLI on the same port.
 - **Where state lives:**
-  - Credentials: `~/.clawdbot/credentials/`
-  - Sessions: `~/.clawdbot/agents/<agentId>/sessions/`
+  - Credentials: `~/.moltbot/credentials/`
+  - Sessions: `~/.moltbot/agents/<agentId>/sessions/`
   - Logs: `/tmp/moltbot/`
 
 ## Credential storage map
 
 Use this when debugging auth or deciding what to back up:
 
-- **WhatsApp**: `~/.clawdbot/credentials/whatsapp/<accountId>/creds.json`
+- **WhatsApp**: `~/.moltbot/credentials/whatsapp/<accountId>/creds.json`
 - **Telegram bot token**: config/env or `channels.telegram.tokenFile`
 - **Discord bot token**: config/env (token file not yet supported)
 - **Slack tokens**: config/env (`channels.slack.*`)
-- **Pairing allowlists**: `~/.clawdbot/credentials/<channel>-allowFrom.json`
-- **Model auth profiles**: `~/.clawdbot/agents/<agentId>/agent/auth-profiles.json`
-- **Legacy OAuth import**: `~/.clawdbot/credentials/oauth.json`
+- **Pairing allowlists**: `~/.moltbot/credentials/<channel>-allowFrom.json`
+- **Model auth profiles**: `~/.moltbot/agents/<agentId>/agent/auth-profiles.json`
+- **Legacy OAuth import**: `~/.moltbot/credentials/oauth.json`
 More detail: [Security](/gateway/security#credential-storage-map).
 
 ## Updating (without wrecking your setup)
 
-- Keep `~/clawd` and `~/.clawdbot/` as “your stuff”; don’t put personal prompts/config into the `moltbot` repo.
+- Keep `~/clawd` and `~/.moltbot/` as “your stuff”; don’t put personal prompts/config into the `moltbot` repo.
 - Updating source: `git pull` + `pnpm install` (when lockfile changed) + keep using `pnpm gateway:watch`.
 
 ## Linux (systemd user service)

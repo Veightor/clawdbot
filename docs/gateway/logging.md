@@ -18,7 +18,7 @@ Moltbot has two log “surfaces”:
 
 - Default rolling log file is under `/tmp/moltbot/` (one file per day): `moltbot-YYYY-MM-DD.log`
   - Date uses the gateway host's local timezone.
-- The log file path and level can be configured via `~/.clawdbot/moltbot.json`:
+- The log file path and level can be configured via `~/.moltbot/moltbot.json`:
   - `logging.file`
   - `logging.level`
 

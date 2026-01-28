@@ -10,7 +10,7 @@ This guide migrates a Moltbot Gateway from one machine to another **without redo
 
 The migration is simple conceptually:
 
-- Copy the **state directory** (`$CLAWDBOT_STATE_DIR`, default: `~/.clawdbot/`) — this includes config, auth, sessions, and channel state.
+- Copy the **state directory** (`$MOLTBOT_STATE_DIR`, default: `~/.moltbot/`) — this includes config, auth, sessions, and channel state.
 - Copy your **workspace** (`~/clawd/` by default) — this includes your agent files (memory, prompts, etc.).
 
 But there are common footguns around **profiles**, **permissions**, and **partial copies**.
@@ -21,12 +21,12 @@ But there are common footguns around **profiles**, **permissions**, and **partia
 
 Most installs use the default:
 
-- **State dir:** `~/.clawdbot/`
+- **State dir:** `~/.moltbot/`
 
 But it may be different if you use:
 
-- `--profile <name>` (often becomes `~/.clawdbot-<profile>/`)
-- `CLAWDBOT_STATE_DIR=/some/path`
+- `--profile <name>` (often becomes `~/.moltbot-<profile>/`)
+- `MOLTBOT_STATE_DIR=/some/path`
 
 If you’re not sure, run on the **old** machine:
 
@@ -34,7 +34,7 @@ If you’re not sure, run on the **old** machine:
 moltbot status
 ```
 
-Look for mentions of `CLAWDBOT_STATE_DIR` / profile in the output. If you run multiple gateways, repeat for each profile.
+Look for mentions of `MOLTBOT_STATE_DIR` / profile in the output. If you run multiple gateways, repeat for each profile.
 
 ### 2) Identify your workspace
 
@@ -61,7 +61,7 @@ If you copy **only** the workspace (e.g., via Git), you do **not** preserve:
 - credentials
 - channel logins
 
-Those live under `$CLAWDBOT_STATE_DIR`.
+Those live under `$MOLTBOT_STATE_DIR`.
 
 ## Migration steps (recommended)
 
@@ -78,12 +78,12 @@ moltbot gateway stop
 ```bash
 # Adjust paths if you use a profile or custom locations
 cd ~
-tar -czf moltbot-state.tgz .clawdbot
+tar -czf moltbot-state.tgz .moltbot
 
 tar -czf clawd-workspace.tgz clawd
 ```
 
-If you have multiple profiles/state dirs (e.g. `~/.clawdbot-main`, `~/.clawdbot-work`), archive each.
+If you have multiple profiles/state dirs (e.g. `~/.moltbot-main`, `~/.moltbot-work`), archive each.
 
 ### Step 1 — Install Moltbot on the new machine
 
@@ -91,13 +91,13 @@ On the **new** machine, install the CLI (and Node if needed):
 
 - See: [Install](/install)
 
-At this stage, it’s OK if onboarding creates a fresh `~/.clawdbot/` — you will overwrite it in the next step.
+At this stage, it’s OK if onboarding creates a fresh `~/.moltbot/` — you will overwrite it in the next step.
 
 ### Step 2 — Copy the state dir + workspace to the new machine
 
 Copy **both**:
 
-- `$CLAWDBOT_STATE_DIR` (default `~/.clawdbot/`)
+- `$MOLTBOT_STATE_DIR` (default `~/.moltbot/`)
 - your workspace (default `~/clawd/`)
 
 Common approaches:
@@ -108,7 +108,7 @@ Common approaches:
 
 After copying, ensure:
 
-- Hidden directories were included (e.g. `.clawdbot/`)
+- Hidden directories were included (e.g. `.moltbot/`)
 - File ownership is correct for the user running the gateway
 
 ### Step 3 — Run Doctor (migrations + service repair)
@@ -132,7 +132,7 @@ moltbot status
 
 ### Footgun: profile / state-dir mismatch
 
-If you ran the old gateway with a profile (or `CLAWDBOT_STATE_DIR`), and the new gateway uses a different one, you’ll see symptoms like:
+If you ran the old gateway with a profile (or `MOLTBOT_STATE_DIR`), and the new gateway uses a different one, you’ll see symptoms like:
 
 - config changes not taking effect
 - channels missing / logged out
@@ -148,10 +148,10 @@ moltbot doctor
 
 `moltbot.json` is not enough. Many providers store state under:
 
-- `$CLAWDBOT_STATE_DIR/credentials/`
-- `$CLAWDBOT_STATE_DIR/agents/<agentId>/...`
+- `$MOLTBOT_STATE_DIR/credentials/`
+- `$MOLTBOT_STATE_DIR/agents/<agentId>/...`
 
-Always migrate the entire `$CLAWDBOT_STATE_DIR` folder.
+Always migrate the entire `$MOLTBOT_STATE_DIR` folder.
 
 ### Footgun: permissions / ownership
 
@@ -168,7 +168,7 @@ If you’re in remote mode, migrate the **gateway host**.
 
 ### Footgun: secrets in backups
 
-`$CLAWDBOT_STATE_DIR` contains secrets (API keys, OAuth tokens, WhatsApp creds). Treat backups like production secrets:
+`$MOLTBOT_STATE_DIR` contains secrets (API keys, OAuth tokens, WhatsApp creds). Treat backups like production secrets:
 
 - store encrypted
 - avoid sharing over insecure channels

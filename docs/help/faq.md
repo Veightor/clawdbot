@@ -324,7 +324,7 @@ The wizard now opens your browser with a tokenized dashboard URL right after onb
 **Localhost (same machine):**
 - Open `http://127.0.0.1:18789/`.
 - If it asks for auth, run `moltbot dashboard` and use the tokenized link (`?token=...`).
-- The token is the same value as `gateway.auth.token` (or `CLAWDBOT_GATEWAY_TOKEN`) and is stored by the UI after first load.
+- The token is the same value as `gateway.auth.token` (or `MOLTBOT_GATEWAY_TOKEN`) and is stored by the UI after first load.
 
 **Not on localhost:**
 - **Tailscale Serve** (recommended): keep bind loopback, run `moltbot gateway --tailscale serve`, open `https://<magicdns>/`. If `gateway.auth.allowTailscale` is `true`, identity headers satisfy auth (no token).
@@ -390,7 +390,7 @@ keeps your bot “exactly the same” (memory, session history, auth, and channe
 state) as long as you copy **both** locations:
 
 1) Install Moltbot on the new machine.
-2) Copy `$CLAWDBOT_STATE_DIR` (default: `~/.clawdbot`) from the old machine.
+2) Copy `$MOLTBOT_STATE_DIR` (default: `~/.moltbot`) from the old machine.
 3) Copy your workspace (default: `~/clawd`).
 4) Run `moltbot doctor` and restart the Gateway service.
 
@@ -399,7 +399,7 @@ remote mode, remember the gateway host owns the session store and workspace.
 
 **Important:** if you only commit/push your workspace to GitHub, you’re backing
 up **memory + bootstrap files**, but **not** session history or auth. Those live
-under `~/.clawdbot/` (for example `~/.clawdbot/agents/<agentId>/sessions/`).
+under `~/.moltbot/` (for example `~/.moltbot/agents/<agentId>/sessions/`).
 
 Related: [Migrating](/install/migrating), [Where things live on disk](/help/faq#where-does-moltbot-store-its-data),
 [Agent workspace](/concepts/agent-workspace), [Doctor](/gateway/doctor),
@@ -797,7 +797,7 @@ Docs: [Getting started](/start/getting-started), [Updating](/install/updating).
 
 Yes. Install the other flavor, then run Doctor so the gateway service points at the new entrypoint.
 This **does not delete your data** - it only changes the Moltbot code install. Your state
-(`~/.clawdbot`) and workspace (`~/clawd`) stay untouched.
+(`~/.moltbot`) and workspace (`~/clawd`) stay untouched.
 
 From npm → git:
 
@@ -952,11 +952,11 @@ Showcase: https://molt.bot/showcase
 
 ### How do I customize skills without keeping the repo dirty
 
-Use managed overrides instead of editing the repo copy. Put your changes in `~/.clawdbot/skills/<name>/SKILL.md` (or add a folder via `skills.load.extraDirs` in `~/.clawdbot/moltbot.json`). Precedence is `<workspace>/skills` > `~/.clawdbot/skills` > bundled, so managed overrides win without touching git. Only upstream-worthy edits should live in the repo and go out as PRs.
+Use managed overrides instead of editing the repo copy. Put your changes in `~/.moltbot/skills/<name>/SKILL.md` (or add a folder via `skills.load.extraDirs` in `~/.moltbot/moltbot.json`). Precedence is `<workspace>/skills` > `~/.moltbot/skills` > bundled, so managed overrides win without touching git. Only upstream-worthy edits should live in the repo and go out as PRs.
 
 ### Can I load skills from a custom folder
 
-Yes. Add extra directories via `skills.load.extraDirs` in `~/.clawdbot/moltbot.json` (lowest precedence). Default precedence remains: `<workspace>/skills` → `~/.clawdbot/skills` → bundled → `skills.load.extraDirs`. `clawdhub` installs into `./skills` by default, which Moltbot treats as `<workspace>/skills`.
+Yes. Add extra directories via `skills.load.extraDirs` in `~/.moltbot/moltbot.json` (lowest precedence). Default precedence remains: `<workspace>/skills` → `~/.moltbot/skills` → bundled → `skills.load.extraDirs`. `clawdhub` installs into `./skills` by default, which Moltbot treats as `<workspace>/skills`.
 
 ### How can I use different models for different tasks
 
@@ -986,7 +986,7 @@ Cron runs inside the Gateway process. If the Gateway is not running continuously
 scheduled jobs will not run.
 
 Checklist:
-- Confirm cron is enabled (`cron.enabled`) and `CLAWDBOT_SKIP_CRON` is not set.
+- Confirm cron is enabled (`cron.enabled`) and `MOLTBOT_SKIP_CRON` is not set.
 - Check the Gateway is running 24/7 (no sleep/restarts).
 - Verify timezone settings for the job (`--tz` vs host timezone).
 
@@ -1046,7 +1046,7 @@ Keep the Gateway on Linux, but make the required CLI binaries resolve to SSH wra
    exec ssh -T user@mac-host /opt/homebrew/bin/imsg "$@"
    ```
 2) Put the wrapper on `PATH` on the Linux host (for example `~/bin/imsg`).
-3) Override the skill metadata (workspace or `~/.clawdbot/skills`) to allow Linux:
+3) Override the skill metadata (workspace or `~/.moltbot/skills`) to allow Linux:
    ```markdown
    ---
    name: imsg
@@ -1080,7 +1080,7 @@ clawdhub install <skill-slug>
 clawdhub update --all
 ```
 
-ClawdHub installs into `./skills` under your current directory (or falls back to your configured Moltbot workspace); Moltbot treats that as `<workspace>/skills` on the next session. For shared skills across agents, place them in `~/.clawdbot/skills/<name>/SKILL.md`. Some skills expect binaries installed via Homebrew; on Linux that means Linuxbrew (see the Homebrew Linux FAQ entry above). See [Skills](/tools/skills) and [ClawdHub](/tools/clawdhub).
+ClawdHub installs into `./skills` under your current directory (or falls back to your configured Moltbot workspace); Moltbot treats that as `<workspace>/skills` on the next session. For shared skills across agents, place them in `~/.moltbot/skills/<name>/SKILL.md`. Some skills expect binaries installed via Homebrew; on Linux that means Linuxbrew (see the Homebrew Linux FAQ entry above). See [Skills](/tools/skills) and [ClawdHub](/tools/clawdhub).
 
 ### How do I install the Chrome extension for browser takeover
 
@@ -1176,7 +1176,7 @@ Docs: [Memory](/concepts/memory), [Context](/concepts/context).
 No - **Moltbot’s state is local**, but **external services still see what you send them**.
 
 - **Local by default:** sessions, memory files, config, and workspace live on the Gateway host
-  (`~/.clawdbot` + your workspace directory).
+  (`~/.moltbot` + your workspace directory).
 - **Remote by necessity:** messages you send to model providers (Anthropic/OpenAI/etc.) go to
   their APIs, and chat platforms (WhatsApp/Telegram/Slack/etc.) store message data on their
   servers.
@@ -1187,31 +1187,31 @@ Related: [Agent workspace](/concepts/agent-workspace), [Memory](/concepts/memory
 
 ### Where does Moltbot store its data
 
-Everything lives under `$CLAWDBOT_STATE_DIR` (default: `~/.clawdbot`):
+Everything lives under `$MOLTBOT_STATE_DIR` (default: `~/.moltbot`):
 
 | Path | Purpose |
 |------|---------|
-| `$CLAWDBOT_STATE_DIR/moltbot.json` | Main config (JSON5) |
-| `$CLAWDBOT_STATE_DIR/credentials/oauth.json` | Legacy OAuth import (copied into auth profiles on first use) |
-| `$CLAWDBOT_STATE_DIR/agents/<agentId>/agent/auth-profiles.json` | Auth profiles (OAuth + API keys) |
-| `$CLAWDBOT_STATE_DIR/agents/<agentId>/agent/auth.json` | Runtime auth cache (managed automatically) |
-| `$CLAWDBOT_STATE_DIR/credentials/` | Provider state (e.g. `whatsapp/<accountId>/creds.json`) |
-| `$CLAWDBOT_STATE_DIR/agents/` | Per‑agent state (agentDir + sessions) |
-| `$CLAWDBOT_STATE_DIR/agents/<agentId>/sessions/` | Conversation history & state (per agent) |
-| `$CLAWDBOT_STATE_DIR/agents/<agentId>/sessions/sessions.json` | Session metadata (per agent) |
+| `$MOLTBOT_STATE_DIR/moltbot.json` | Main config (JSON5) |
+| `$MOLTBOT_STATE_DIR/credentials/oauth.json` | Legacy OAuth import (copied into auth profiles on first use) |
+| `$MOLTBOT_STATE_DIR/agents/<agentId>/agent/auth-profiles.json` | Auth profiles (OAuth + API keys) |
+| `$MOLTBOT_STATE_DIR/agents/<agentId>/agent/auth.json` | Runtime auth cache (managed automatically) |
+| `$MOLTBOT_STATE_DIR/credentials/` | Provider state (e.g. `whatsapp/<accountId>/creds.json`) |
+| `$MOLTBOT_STATE_DIR/agents/` | Per‑agent state (agentDir + sessions) |
+| `$MOLTBOT_STATE_DIR/agents/<agentId>/sessions/` | Conversation history & state (per agent) |
+| `$MOLTBOT_STATE_DIR/agents/<agentId>/sessions/sessions.json` | Session metadata (per agent) |
 
-Legacy single‑agent path: `~/.clawdbot/agent/*` (migrated by `moltbot doctor`).
+Legacy single‑agent path: `~/.moltbot/agent/*` (migrated by `moltbot doctor`).
 
 Your **workspace** (AGENTS.md, memory files, skills, etc.) is separate and configured via `agents.defaults.workspace` (default: `~/clawd`).
 
 ### Where should AGENTSmd SOULmd USERmd MEMORYmd live
 
-These files live in the **agent workspace**, not `~/.clawdbot`.
+These files live in the **agent workspace**, not `~/.moltbot`.
 
 - **Workspace (per agent)**: `AGENTS.md`, `SOUL.md`, `IDENTITY.md`, `USER.md`,
   `MEMORY.md` (or `memory.md`), `memory/YYYY-MM-DD.md`, optional `HEARTBEAT.md`.
-- **State dir (`~/.clawdbot`)**: config, credentials, auth profiles, sessions, logs,
-  and shared skills (`~/.clawdbot/skills`).
+- **State dir (`~/.moltbot`)**: config, credentials, auth profiles, sessions, logs,
+  and shared skills (`~/.moltbot/skills`).
 
 Default workspace is `~/clawd`, configurable via:
 
@@ -1236,7 +1236,7 @@ Put your **agent workspace** in a **private** git repo and back it up somewhere
 private (for example GitHub private). This captures memory + AGENTS/SOUL/USER
 files, and lets you restore the assistant’s “mind” later.
 
-Do **not** commit anything under `~/.clawdbot` (credentials, sessions, tokens).
+Do **not** commit anything under `~/.moltbot` (credentials, sessions, tokens).
 If you need a full restore, back up both the workspace and the state directory
 separately (see the migration question above).
 
@@ -1276,17 +1276,17 @@ Session state is owned by the **gateway host**. If you’re in remote mode, the 
 
 ### What format is the config Where is it
 
-Moltbot reads an optional **JSON5** config from `$CLAWDBOT_CONFIG_PATH` (default: `~/.clawdbot/moltbot.json`):
+Moltbot reads an optional **JSON5** config from `$MOLTBOT_CONFIG_PATH` (default: `~/.moltbot/moltbot.json`):
 
 ```
-$CLAWDBOT_CONFIG_PATH
+$MOLTBOT_CONFIG_PATH
 ```
 
 If the file is missing, it uses safe‑ish defaults (including a default workspace of `~/clawd`).
 
 ### I set gatewaybind lan or tailnet and now nothing listens the UI says unauthorized
 
-Non-loopback binds **require auth**. Configure `gateway.auth.mode` + `gateway.auth.token` (or use `CLAWDBOT_GATEWAY_TOKEN`).
+Non-loopback binds **require auth**. Configure `gateway.auth.mode` + `gateway.auth.token` (or use `MOLTBOT_GATEWAY_TOKEN`).
 
 ```json5
 {
@@ -1344,7 +1344,7 @@ Gateway process.
 Notes:
 - If you use allowlists, add `web_search`/`web_fetch` or `group:web`.
 - `web_fetch` is enabled by default (unless explicitly disabled).
-- Daemons read env vars from `~/.clawdbot/.env` (or the service environment).
+- Daemons read env vars from `~/.moltbot/.env` (or the service environment).
 
 Docs: [Web tools](/tools/web).
 
@@ -1515,7 +1515,7 @@ Yes. `config.apply` validates + writes the full config and restarts the Gateway 
 else is removed.
 
 Recover:
-- Restore from backup (git or a copied `~/.clawdbot/moltbot.json`).
+- Restore from backup (git or a copied `~/.moltbot/moltbot.json`).
 - If you have no backup, re-run `moltbot doctor` and reconfigure channels/models.
 - If this was unexpected, file a bug and include your last known config or any backup.
 - A local coding agent can often reconstruct a working config from logs or history.
@@ -1583,7 +1583,7 @@ Docs: [Gateway protocol](/gateway/protocol), [Discovery](/gateway/discovery), [m
 Moltbot reads env vars from the parent process (shell, launchd/systemd, CI, etc.) and additionally loads:
 
 - `.env` from the current working directory
-- a global fallback `.env` from `~/.clawdbot/.env` (aka `$CLAWDBOT_STATE_DIR/.env`)
+- a global fallback `.env` from `~/.moltbot/.env` (aka `$MOLTBOT_STATE_DIR/.env`)
 
 Neither `.env` file overrides existing env vars.
 
@@ -1604,7 +1604,7 @@ See [/environment](/environment) for full precedence and sources.
 
 Two common fixes:
 
-1) Put the missing keys in `~/.clawdbot/.env` so they’re picked up even when the service doesn’t inherit your shell env.
+1) Put the missing keys in `~/.moltbot/.env` so they’re picked up even when the service doesn’t inherit your shell env.
 2) Enable shell import (opt‑in convenience):
 
 ```json5
@@ -1619,7 +1619,7 @@ Two common fixes:
 ```
 
 This runs your login shell and imports only missing expected keys (never overrides). Env var equivalents:
-`CLAWDBOT_LOAD_SHELL_ENV=1`, `CLAWDBOT_SHELL_ENV_TIMEOUT_MS=15000`.
+`MOLTBOT_LOAD_SHELL_ENV=1`, `MOLTBOT_SHELL_ENV_TIMEOUT_MS=15000`.
 
 ### I set COPILOTGITHUBTOKEN but models status shows Shell env off Why
 
@@ -1630,7 +1630,7 @@ your login shell automatically.
 If the Gateway runs as a service (launchd/systemd), it won’t inherit your shell
 environment. Fix by doing one of these:
 
-1) Put the token in `~/.clawdbot/.env`:
+1) Put the token in `~/.moltbot/.env`:
    ```
    COPILOT_GITHUB_TOKEN=...
    ```
@@ -1711,7 +1711,7 @@ moltbot onboard --install-daemon
 
 Notes:
 - The onboarding wizard also offers **Reset** if it sees an existing config. See [Wizard](/start/wizard).
-- If you used profiles (`--profile` / `CLAWDBOT_PROFILE`), reset each state dir (defaults are `~/.clawdbot-<profile>`).
+- If you used profiles (`--profile` / `MOLTBOT_PROFILE`), reset each state dir (defaults are `~/.moltbot-<profile>`).
 - Dev reset: `moltbot gateway --dev --reset` (dev-only; wipes dev config + credentials + sessions + workspace).
 
 ### Im getting context too large errors how do I reset or compact
@@ -1819,7 +1819,7 @@ Direct chats collapse to the main session by default. Groups/channels have their
 
 No hard limits. Dozens (even hundreds) are fine, but watch for:
 
-- **Disk growth:** sessions + transcripts live under `~/.clawdbot/agents/<agentId>/sessions/`.
+- **Disk growth:** sessions + transcripts live under `~/.moltbot/agents/<agentId>/sessions/`.
 - **Token cost:** more agents means more concurrent model usage.
 - **Ops overhead:** per-agent auth profiles, workspaces, and channel routing.
 
@@ -1899,7 +1899,7 @@ Safe options:
 - `/model` in chat (quick, per-session)
 - `moltbot models set ...` (updates just model config)
 - `moltbot configure --section models` (interactive)
-- edit `agents.defaults.model` in `~/.clawdbot/moltbot.json`
+- edit `agents.defaults.model` in `~/.moltbot/moltbot.json`
 
 Avoid `config.apply` with a partial object unless you intend to replace the whole config.
 If you did overwrite config, restore from backup or re-run `moltbot doctor` to repair.
@@ -2101,7 +2101,7 @@ This usually means the **new agent** has an empty auth store. Auth is per-agent 
 stored in:
 
 ```
-~/.clawdbot/agents/<agentId>/agent/auth-profiles.json
+~/.moltbot/agents/<agentId>/agent/auth-profiles.json
 ```
 
 Fix options:
@@ -2132,10 +2132,10 @@ It means the system attempted to use the auth profile ID `anthropic:default`, bu
 ### Fix checklist for No credentials found for profile anthropicdefault
 
 - **Confirm where auth profiles live** (new vs legacy paths)
-  - Current: `~/.clawdbot/agents/<agentId>/agent/auth-profiles.json`
-  - Legacy: `~/.clawdbot/agent/*` (migrated by `moltbot doctor`)
+  - Current: `~/.moltbot/agents/<agentId>/agent/auth-profiles.json`
+  - Legacy: `~/.moltbot/agent/*` (migrated by `moltbot doctor`)
 - **Confirm your env var is loaded by the Gateway**
-  - If you set `ANTHROPIC_API_KEY` in your shell but run the Gateway via systemd/launchd, it may not inherit it. Put it in `~/.clawdbot/.env` or enable `env.shellEnv`.
+  - If you set `ANTHROPIC_API_KEY` in your shell but run the Gateway via systemd/launchd, it may not inherit it. Put it in `~/.moltbot/.env` or enable `env.shellEnv`.
 - **Make sure you’re editing the correct agent**
   - Multi‑agent setups mean there can be multiple `auth-profiles.json` files.
 - **Sanity‑check model/auth status**
@@ -2150,7 +2150,7 @@ can’t find it in its auth store.
   - Run `claude setup-token`, then paste it with `moltbot models auth setup-token --provider anthropic`.
   - If the token was created on another machine, use `moltbot models auth paste-token --provider anthropic`.
 - **If you want to use an API key instead**
-  - Put `ANTHROPIC_API_KEY` in `~/.clawdbot/.env` on the **gateway host**.
+  - Put `ANTHROPIC_API_KEY` in `~/.moltbot/.env` on the **gateway host**.
   - Clear any pinned order that forces a missing profile:
     ```bash
     moltbot models auth order clear --provider anthropic
@@ -2180,7 +2180,7 @@ Related: [/concepts/oauth](/concepts/oauth) (OAuth flows, token storage, multi-a
 An auth profile is a named credential record (OAuth or API key) tied to a provider. Profiles live in:
 
 ```
-~/.clawdbot/agents/<agentId>/agent/auth-profiles.json
+~/.moltbot/agents/<agentId>/agent/auth-profiles.json
 ```
 
 ### What are typical profile IDs
@@ -2237,7 +2237,7 @@ The wizard explicitly supports Anthropic setup-token and OpenAI Codex OAuth and 
 Precedence:
 
 ```
---port > CLAWDBOT_GATEWAY_PORT > gateway.port > default 18789
+--port > MOLTBOT_GATEWAY_PORT > gateway.port > default 18789
 ```
 
 ### Why does moltbot gateway status say Runtime running but RPC probe failed
@@ -2251,7 +2251,7 @@ Use `moltbot gateway status` and trust these lines:
 
 ### Why does moltbot gateway status show Config cli and Config service different
 
-You’re editing one config file while the service is running another (often a `--profile` / `CLAWDBOT_STATE_DIR` mismatch).
+You’re editing one config file while the service is running another (often a `--profile` / `MOLTBOT_STATE_DIR` mismatch).
 
 Fix:
 ```bash
@@ -2298,7 +2298,7 @@ Fix:
 - Fastest: `moltbot dashboard` (prints + copies tokenized link, tries to open; shows SSH hint if headless).
 - If you don’t have a token yet: `moltbot doctor --generate-gateway-token`.
 - If remote, tunnel first: `ssh -N -L 18789:127.0.0.1:18789 user@host` then open `http://127.0.0.1:18789/?token=...`.
-- Set `gateway.auth.token` (or `CLAWDBOT_GATEWAY_TOKEN`) on the gateway host.
+- Set `gateway.auth.token` (or `MOLTBOT_GATEWAY_TOKEN`) on the gateway host.
 - In the Control UI settings, paste the same token (or refresh with a one-time `?token=...` link).
 - Still stuck? Run `moltbot status --all` and follow [Troubleshooting](/gateway/troubleshooting). See [Dashboard](/web/dashboard) for auth details.
 
@@ -2318,17 +2318,17 @@ Usually no - one Gateway can run multiple messaging channels and agents. Use mul
 
 Yes, but you must isolate:
 
-- `CLAWDBOT_CONFIG_PATH` (per‑instance config)
-- `CLAWDBOT_STATE_DIR` (per‑instance state)
+- `MOLTBOT_CONFIG_PATH` (per‑instance config)
+- `MOLTBOT_STATE_DIR` (per‑instance state)
 - `agents.defaults.workspace` (workspace isolation)
 - `gateway.port` (unique ports)
 
 Quick setup (recommended):
-- Use `moltbot --profile <name> …` per instance (auto-creates `~/.clawdbot-<name>`).
+- Use `moltbot --profile <name> …` per instance (auto-creates `~/.moltbot-<name>`).
 - Set a unique `gateway.port` in each profile config (or pass `--port` for manual runs).
 - Install a per-profile service: `moltbot --profile <name> gateway install`.
 
-Profiles also suffix service names (`bot.molt.<profile>`; legacy `com.clawdbot.*`, `moltbot-gateway-<profile>.service`, `Moltbot Gateway (<profile>)`).
+Profiles also suffix service names (`bot.molt.<profile>`; legacy `com.moltbot.*`, `moltbot-gateway-<profile>.service`, `Moltbot Gateway (<profile>)`).
 Full guide: [Multiple gateways](/gateway/multiple-gateways).
 
 ### What does invalid handshake code 1008 mean
@@ -2373,7 +2373,7 @@ moltbot logs --follow
 ```
 
 Service/supervisor logs (when the gateway runs via launchd/systemd):
-- macOS: `$CLAWDBOT_STATE_DIR/logs/gateway.log` and `gateway.err.log` (default: `~/.clawdbot/logs/...`; profiles use `~/.clawdbot-<profile>/logs/...`)
+- macOS: `$MOLTBOT_STATE_DIR/logs/gateway.log` and `gateway.err.log` (default: `~/.moltbot/logs/...`; profiles use `~/.moltbot-<profile>/logs/...`)
 - Linux: `journalctl --user -u moltbot-gateway[-<profile>].service -n 200 --no-pager`
 - Windows: `schtasks /Query /TN "Moltbot Gateway (<profile>)" /V /FO LIST`
 

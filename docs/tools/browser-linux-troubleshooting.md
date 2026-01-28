@@ -34,7 +34,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt --fix-broken install -y  # if there are dependency errors
 ```
 
-Then update your Moltbot config (`~/.clawdbot/moltbot.json`):
+Then update your Moltbot config (`~/.moltbot/moltbot.json`):
 
 ```json
 {
@@ -67,7 +67,7 @@ If you must use snap Chromium, configure Moltbot to attach to a manually-started
 ```bash
 chromium-browser --headless --no-sandbox --disable-gpu \
   --remote-debugging-port=18800 \
-  --user-data-dir=$HOME/.clawdbot/browser/clawd/user-data \
+  --user-data-dir=$HOME/.moltbot/browser/clawd/user-data \
   about:blank &
 ```
 
@@ -79,7 +79,7 @@ Description=Clawd Browser (Chrome CDP)
 After=network.target
 
 [Service]
-ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.clawdbot/browser/clawd/user-data about:blank
+ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.moltbot/browser/clawd/user-data about:blank
 Restart=on-failure
 RestartSec=5
 

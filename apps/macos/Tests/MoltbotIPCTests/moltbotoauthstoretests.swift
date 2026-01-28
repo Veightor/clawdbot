@@ -14,7 +14,7 @@ struct MoltbotOAuthStoreTests {
 
     @Test
     func usesEnvOverrideForMoltbotOAuthDir() throws {
-        let key = "CLAWDBOT_OAUTH_DIR"
+        let key = "MOLTBOT_OAUTH_DIR"
         let previous = ProcessInfo.processInfo.environment[key]
         defer {
             if let previous {

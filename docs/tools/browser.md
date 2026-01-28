@@ -51,7 +51,7 @@ Set `browser.defaultProfile: "clawd"` if you want managed mode by default.
 
 ## Configuration
 
-Browser settings live in `~/.clawdbot/moltbot.json`.
+Browser settings live in `~/.moltbot/moltbot.json`.
 
 ```json5
 {
@@ -78,7 +78,7 @@ Browser settings live in `~/.clawdbot/moltbot.json`.
 Notes:
 - The browser control service binds to loopback on a port derived from `gateway.port`
   (default: `18791`, which is gateway + 2). The relay uses the next port (`18792`).
-- If you override the Gateway port (`gateway.port` or `CLAWDBOT_GATEWAY_PORT`),
+- If you override the Gateway port (`gateway.port` or `MOLTBOT_GATEWAY_PORT`),
   the derived browser ports shift to stay in the same “family”.
 - `cdpUrl` defaults to the relay port when unset.
 - `remoteCdpTimeoutMs` applies to remote (non-loopback) CDP reachability checks.

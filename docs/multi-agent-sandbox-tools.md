@@ -24,7 +24,7 @@ when the container is created.
 Auth is per-agent: each agent reads from its own `agentDir` auth store at:
 
 ```
-~/.clawdbot/agents/<agentId>/agent/auth-profiles.json
+~/.moltbot/agents/<agentId>/agent/auth-profiles.json
 ```
 
 Credentials are **not** shared between agents. Never reuse `agentDir` across agents.
@@ -345,7 +345,7 @@ After configuring multi-agent sandbox and tools:
 
 4. **Monitor logs:**
    ```exec
-   tail -f "${CLAWDBOT_STATE_DIR:-$HOME/.clawdbot}/logs/gateway.log" | grep -E "routing|sandbox|tools"
+   tail -f "${MOLTBOT_STATE_DIR:-$HOME/.moltbot}/logs/gateway.log" | grep -E "routing|sandbox|tools"
    ```
 
 ---

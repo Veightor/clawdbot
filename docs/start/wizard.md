@@ -70,7 +70,7 @@ Tip: `--json` does **not** imply non-interactive mode. Use `--non-interactive` (
 ## Flow details (local)
 
 1) **Existing config detection**
-   - If `~/.clawdbot/moltbot.json` exists, choose **Keep / Modify / Reset**.
+   - If `~/.moltbot/moltbot.json` exists, choose **Keep / Modify / Reset**.
    - Re-running the wizard does **not** wipe anything unless you explicitly choose **Reset**
      (or pass `--reset`).
    - If the config is invalid or contains legacy keys, the wizard stops and asks
@@ -87,7 +87,7 @@ Tip: `--json` does **not** imply non-interactive mode. Use `--non-interactive` (
    - **OpenAI Code (Codex) subscription (Codex CLI)**: if `~/.codex/auth.json` exists, the wizard can reuse it.
    - **OpenAI Code (Codex) subscription (OAuth)**: browser flow; paste the `code#state`.
      - Sets `agents.defaults.model` to `openai-codex/gpt-5.2` when model is unset or `openai/*`.
-   - **OpenAI API key**: uses `OPENAI_API_KEY` if present or prompts for a key, then saves it to `~/.clawdbot/.env` so launchd can read it.
+   - **OpenAI API key**: uses `OPENAI_API_KEY` if present or prompts for a key, then saves it to `~/.moltbot/.env` so launchd can read it.
    - **OpenCode Zen (multi-model proxy)**: prompts for `OPENCODE_API_KEY` (or `OPENCODE_ZEN_API_KEY`, get it at https://opencode.ai/auth).
    - **API key**: stores the key for you.
    - **Vercel AI Gateway (multi-model proxy)**: prompts for `AI_GATEWAY_API_KEY`.
@@ -102,7 +102,7 @@ Tip: `--json` does **not** imply non-interactive mode. Use `--non-interactive` (
    - **Skip**: no auth configured yet.
    - Pick a default model from detected options (or enter provider/model manually).
    - Wizard runs a model check and warns if the configured model is unknown or missing auth.
-  - OAuth credentials live in `~/.clawdbot/credentials/oauth.json`; auth profiles live in `~/.clawdbot/agents/<agentId>/agent/auth-profiles.json` (API keys + OAuth).
+  - OAuth credentials live in `~/.moltbot/credentials/oauth.json`; auth profiles live in `~/.moltbot/agents/<agentId>/agent/auth-profiles.json` (API keys + OAuth).
    - More detail: [/concepts/oauth](/concepts/oauth)
 
 3) **Workspace**
@@ -282,7 +282,7 @@ Clients (macOS app, Control UI) can render steps without re‑implementing onboa
 
 The wizard can install `signal-cli` from GitHub releases:
 - Downloads the appropriate release asset.
-- Stores it under `~/.clawdbot/tools/signal-cli/<version>/`.
+- Stores it under `~/.moltbot/tools/signal-cli/<version>/`.
 - Writes `channels.signal.cliPath` to your config.
 
 Notes:
@@ -292,7 +292,7 @@ Notes:
 
 ## What the wizard writes
 
-Typical fields in `~/.clawdbot/moltbot.json`:
+Typical fields in `~/.moltbot/moltbot.json`:
 - `agents.defaults.workspace`
 - `agents.defaults.model` / `models.providers` (if Minimax chosen)
 - `gateway.*` (mode, bind, auth, tailscale)
@@ -307,8 +307,8 @@ Typical fields in `~/.clawdbot/moltbot.json`:
 
 `moltbot agents add` writes `agents.list[]` and optional `bindings`.
 
-WhatsApp credentials go under `~/.clawdbot/credentials/whatsapp/<accountId>/`.
-Sessions are stored under `~/.clawdbot/agents/<agentId>/sessions/`.
+WhatsApp credentials go under `~/.moltbot/credentials/whatsapp/<accountId>/`.
+Sessions are stored under `~/.moltbot/agents/<agentId>/sessions/`.
 
 Some channels are delivered as plugins. When you pick one during onboarding, the wizard
 will prompt to install it (npm or a local path) before it can be configured.

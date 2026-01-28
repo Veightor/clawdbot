@@ -31,7 +31,7 @@ You can change the filename via hook config.
 
 ## Configuration
 
-Add this to your config (`~/.clawdbot/moltbot.json`):
+Add this to your config (`~/.moltbot/moltbot.json`):
 
 ```json
 {

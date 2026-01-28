@@ -44,13 +44,13 @@ Reference the nix-moltbot README for module options.
 
 ## Nix Mode Runtime Behavior
 
-When `CLAWDBOT_NIX_MODE=1` is set (automatic with nix-moltbot):
+When `MOLTBOT_NIX_MODE=1` is set (automatic with nix-moltbot):
 
 Moltbot supports a **Nix mode** that makes configuration deterministic and disables auto-install flows.
 Enable it by exporting:
 
 ```bash
-CLAWDBOT_NIX_MODE=1
+MOLTBOT_NIX_MODE=1
 ```
 
 On macOS, the GUI app does not automatically inherit shell env vars. You can
@@ -62,10 +62,10 @@ defaults write bot.molt.mac moltbot.nixMode -bool true
 
 ### Config + state paths
 
-Moltbot reads JSON5 config from `CLAWDBOT_CONFIG_PATH` and stores mutable data in `CLAWDBOT_STATE_DIR`.
+Moltbot reads JSON5 config from `MOLTBOT_CONFIG_PATH` and stores mutable data in `MOLTBOT_STATE_DIR`.
 
-- `CLAWDBOT_STATE_DIR` (default: `~/.clawdbot`)
-- `CLAWDBOT_CONFIG_PATH` (default: `$CLAWDBOT_STATE_DIR/moltbot.json`)
+- `MOLTBOT_STATE_DIR` (default: `~/.moltbot`)
+- `MOLTBOT_CONFIG_PATH` (default: `$MOLTBOT_STATE_DIR/moltbot.json`)
 
 When running under Nix, set these explicitly to Nix-managed locations so runtime state and config
 stay out of the immutable store.

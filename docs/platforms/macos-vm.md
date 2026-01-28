@@ -145,7 +145,7 @@ Follow the onboarding prompts to set up your model provider (Anthropic, OpenAI, 
 Edit the config file:
 
 ```bash
-nano ~/.clawdbot/moltbot.json
+nano ~/.moltbot/moltbot.json
 ```
 
 Add your channels:

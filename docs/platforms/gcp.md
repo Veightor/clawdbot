@@ -21,7 +21,7 @@ Pricing varies by machine type and region; pick the smallest VM that fits your w
 - Create a Compute Engine VM
 - Install Docker (isolated app runtime)
 - Start the Moltbot Gateway in Docker
-- Persist `~/.clawdbot` + `~/clawd` on the host (survives restarts/rebuilds)
+- Persist `~/.moltbot` + `~/clawd` on the host (survives restarts/rebuilds)
 - Access the Control UI from your laptop via an SSH tunnel
 
 The Gateway can be accessed via:
@@ -202,7 +202,7 @@ Docker containers are ephemeral.
 All long-lived state must live on the host.
 
 ```bash
-mkdir -p ~/.clawdbot
+mkdir -p ~/.moltbot
 mkdir -p ~/clawd
 ```
 
@@ -213,16 +213,16 @@ mkdir -p ~/clawd
 Create `.env` in the repository root.
 
 ```bash
-CLAWDBOT_IMAGE=moltbot:latest
-CLAWDBOT_GATEWAY_TOKEN=change-me-now
-CLAWDBOT_GATEWAY_BIND=lan
-CLAWDBOT_GATEWAY_PORT=18789
+MOLTBOT_IMAGE=moltbot:latest
+MOLTBOT_GATEWAY_TOKEN=change-me-now
+MOLTBOT_GATEWAY_BIND=lan
+MOLTBOT_GATEWAY_PORT=18789
 
-CLAWDBOT_CONFIG_DIR=/home/$USER/.clawdbot
-CLAWDBOT_WORKSPACE_DIR=/home/$USER/clawd
+MOLTBOT_CONFIG_DIR=/home/$USER/.moltbot
+MOLTBOT_WORKSPACE_DIR=/home/$USER/clawd
 
 GOG_KEYRING_PASSWORD=change-me-now
-XDG_CONFIG_HOME=/home/node/.clawdbot
+XDG_CONFIG_HOME=/home/node/.moltbot
 ```
 
 Generate strong secrets:
@@ -242,7 +242,7 @@ Create or update `docker-compose.yml`.
 ```yaml
 services:
   moltbot-gateway:
-    image: ${CLAWDBOT_IMAGE}
+    image: ${MOLTBOT_IMAGE}
     build: .
     restart: unless-stopped
     env_file:
@@ -251,19 +251,19 @@ services:
       - HOME=/home/node
       - NODE_ENV=production
       - TERM=xterm-256color
-      - CLAWDBOT_GATEWAY_BIND=${CLAWDBOT_GATEWAY_BIND}
-      - CLAWDBOT_GATEWAY_PORT=${CLAWDBOT_GATEWAY_PORT}
-      - CLAWDBOT_GATEWAY_TOKEN=${CLAWDBOT_GATEWAY_TOKEN}
+      - MOLTBOT_GATEWAY_BIND=${MOLTBOT_GATEWAY_BIND}
+      - MOLTBOT_GATEWAY_PORT=${MOLTBOT_GATEWAY_PORT}
+      - MOLTBOT_GATEWAY_TOKEN=${MOLTBOT_GATEWAY_TOKEN}
       - GOG_KEYRING_PASSWORD=${GOG_KEYRING_PASSWORD}
       - XDG_CONFIG_HOME=${XDG_CONFIG_HOME}
       - PATH=/home/linuxbrew/.linuxbrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     volumes:
-      - ${CLAWDBOT_CONFIG_DIR}:/home/node/.clawdbot
-      - ${CLAWDBOT_WORKSPACE_DIR}:/home/node/clawd
+      - ${MOLTBOT_CONFIG_DIR}:/home/node/.moltbot
+      - ${MOLTBOT_WORKSPACE_DIR}:/home/node/clawd
     ports:
       # Recommended: keep the Gateway loopback-only on the VM; access via SSH tunnel.
       # To expose it publicly, remove the `127.0.0.1:` prefix and firewall accordingly.
-      - "127.0.0.1:${CLAWDBOT_GATEWAY_PORT}:18789"
+      - "127.0.0.1:${MOLTBOT_GATEWAY_PORT}:18789"
 
       # Optional: only if you run iOS/Android nodes against this VM and need Canvas host.
       # If you expose this publicly, read /gateway/security and firewall accordingly.
@@ -274,9 +274,9 @@ services:
         "dist/index.js",
         "gateway",
         "--bind",
-        "${CLAWDBOT_GATEWAY_BIND}",
+        "${MOLTBOT_GATEWAY_BIND}",
         "--port",
-        "${CLAWDBOT_GATEWAY_PORT}"
+        "${MOLTBOT_GATEWAY_PORT}"
       ]
 ```
 
@@ -405,12 +405,12 @@ All long-lived state must survive restarts, rebuilds, and reboots.
 
 | Component | Location | Persistence mechanism | Notes |
 |---|---|---|---|
-| Gateway config | `/home/node/.clawdbot/` | Host volume mount | Includes `moltbot.json`, tokens |
-| Model auth profiles | `/home/node/.clawdbot/` | Host volume mount | OAuth tokens, API keys |
-| Skill configs | `/home/node/.clawdbot/skills/` | Host volume mount | Skill-level state |
+| Gateway config | `/home/node/.moltbot/` | Host volume mount | Includes `moltbot.json`, tokens |
+| Model auth profiles | `/home/node/.moltbot/` | Host volume mount | OAuth tokens, API keys |
+| Skill configs | `/home/node/.moltbot/skills/` | Host volume mount | Skill-level state |
 | Agent workspace | `/home/node/clawd/` | Host volume mount | Code and agent artifacts |
-| WhatsApp session | `/home/node/.clawdbot/` | Host volume mount | Preserves QR login |
-| Gmail keyring | `/home/node/.clawdbot/` | Host volume + password | Requires `GOG_KEYRING_PASSWORD` |
+| WhatsApp session | `/home/node/.moltbot/` | Host volume mount | Preserves QR login |
+| Gmail keyring | `/home/node/.moltbot/` | Host volume + password | Requires `GOG_KEYRING_PASSWORD` |
 | External binaries | `/usr/local/bin/` | Docker image | Must be baked at build time |
 | Node runtime | Container filesystem | Docker image | Rebuilt every image build |
 | OS packages | Container filesystem | Docker image | Do not install at runtime |

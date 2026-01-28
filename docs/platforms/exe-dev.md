@@ -50,7 +50,7 @@ Then connect:
 ssh <vm-name>.exe.xyz
 ```
 
-Tip: keep this VM **stateful**. Moltbot stores state under `~/.clawdbot/` and `~/clawd/`.
+Tip: keep this VM **stateful**. Moltbot stores state under `~/.moltbot/` and `~/clawd/`.
 
 ## 2) Install prerequisites (on the VM)
 

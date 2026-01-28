@@ -56,7 +56,7 @@ ssh-copy-id -i ~/.ssh/id_rsa <REMOTE_USER>@<REMOTE_IP>
 ### Step 3: Set Gateway Token
 
 ```bash
-launchctl setenv CLAWDBOT_GATEWAY_TOKEN "<your-token>"
+launchctl setenv MOLTBOT_GATEWAY_TOKEN "<your-token>"
 ```
 
 ### Step 4: Start SSH Tunnel
@@ -116,7 +116,7 @@ The tunnel will now:
 - Restart if it crashes
 - Keep running in the background
 
-Legacy note: remove any leftover `com.clawdbot.ssh-tunnel` LaunchAgent if present.
+Legacy note: remove any leftover `com.moltbot.ssh-tunnel` LaunchAgent if present.
 
 ---
 

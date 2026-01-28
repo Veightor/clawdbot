@@ -11,7 +11,7 @@ struct MoltbotConfigFileTests {
             .appendingPathComponent("moltbot.json")
             .path
 
-        await TestIsolation.withEnvValues(["CLAWDBOT_CONFIG_PATH": override]) {
+        await TestIsolation.withEnvValues(["MOLTBOT_CONFIG_PATH": override]) {
             #expect(MoltbotConfigFile.url().path == override)
         }
     }
@@ -24,7 +24,7 @@ struct MoltbotConfigFileTests {
             .appendingPathComponent("moltbot.json")
             .path
 
-        await TestIsolation.withEnvValues(["CLAWDBOT_CONFIG_PATH": override]) {
+        await TestIsolation.withEnvValues(["MOLTBOT_CONFIG_PATH": override]) {
             MoltbotConfigFile.saveDict([
                 "gateway": [
                     "remote": [
@@ -47,7 +47,7 @@ struct MoltbotConfigFileTests {
             .appendingPathComponent("moltbot.json")
             .path
 
-        await TestIsolation.withEnvValues(["CLAWDBOT_CONFIG_PATH": override]) {
+        await TestIsolation.withEnvValues(["MOLTBOT_CONFIG_PATH": override]) {
             MoltbotConfigFile.saveDict([
                 "gateway": [
                     "remote": [
@@ -69,8 +69,8 @@ struct MoltbotConfigFileTests {
             .path
 
         await TestIsolation.withEnvValues([
-            "CLAWDBOT_CONFIG_PATH": nil,
-            "CLAWDBOT_STATE_DIR": dir,
+            "MOLTBOT_CONFIG_PATH": nil,
+            "MOLTBOT_STATE_DIR": dir,
         ]) {
             #expect(MoltbotConfigFile.stateDirURL().path == dir)
             #expect(MoltbotConfigFile.url().path == "\(dir)/moltbot.json")

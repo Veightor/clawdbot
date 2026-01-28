@@ -6,7 +6,7 @@ Sources/Gateway/KeychainStore.swift
 Sources/Camera/CameraController.swift
 Sources/Chat/ChatSheet.swift
 Sources/Chat/IOSGatewayChatTransport.swift
-Sources/ClawdbotApp.swift
+Sources/moltbotApp.swift
 Sources/Location/LocationService.swift
 Sources/Model/NodeAppModel.swift
 Sources/RootCanvas.swift
@@ -47,7 +47,7 @@ Sources/Voice/VoiceWakePreferences.swift
 ../shared/MoltbotKit/Sources/MoltbotKit/CanvasCommandParams.swift
 ../shared/MoltbotKit/Sources/MoltbotKit/CanvasCommands.swift
 ../shared/MoltbotKit/Sources/MoltbotKit/Capabilities.swift
-../shared/MoltbotKit/Sources/MoltbotKit/ClawdbotKitResources.swift
+../shared/MoltbotKit/Sources/MoltbotKit/moltbotKitResources.swift
 ../shared/MoltbotKit/Sources/MoltbotKit/DeepLinks.swift
 ../shared/MoltbotKit/Sources/MoltbotKit/JPEGTranscoder.swift
 ../shared/MoltbotKit/Sources/MoltbotKit/NodeError.swift

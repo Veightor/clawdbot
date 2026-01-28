@@ -194,7 +194,7 @@ final class ControlChannel {
                 ? "gateway.remote.token"
                 : "gateway.auth.token"
             return
-                "Gateway rejected token; set \(tokenKey) (or CLAWDBOT_GATEWAY_TOKEN) " +
+                "Gateway rejected token; set \(tokenKey) (or MOLTBOT_GATEWAY_TOKEN) " +
                 "or clear it on the gateway. " +
                 "Reason: \(reason)"
         }

@@ -31,7 +31,7 @@ const execFileAsync = promisify(execFile);
 export function renderGatewayServiceCleanupHints(
   env: Record<string, string | undefined> = process.env as Record<string, string | undefined>,
 ): string[] {
-  const profile = env.CLAWDBOT_PROFILE;
+  const profile = env.MOLTBOT_PROFILE;
   switch (process.platform) {
     case "darwin": {
       const label = resolveGatewayLaunchAgentLabel(profile);
@@ -78,7 +78,7 @@ function isMoltbotGatewayLaunchdService(label: string, contents: string): boolea
   if (hasGatewayServiceMarker(contents)) return true;
   const lowerContents = contents.toLowerCase();
   if (!lowerContents.includes("gateway")) return false;
-  return label.startsWith("bot.molt.") || label.startsWith("com.clawdbot.");
+  return label.startsWith("bot.molt.") || label.startsWith("com.moltbot.");
 }
 
 function isMoltbotGatewaySystemdService(name: string, contents: string): boolean {
@@ -103,7 +103,7 @@ function tryExtractPlistLabel(contents: string): string | null {
 function isIgnoredLaunchdLabel(label: string): boolean {
   return (
     label === resolveGatewayLaunchAgentLabel() ||
-    resolveLegacyGatewayLaunchAgentLabels(process.env.CLAWDBOT_PROFILE).includes(label)
+    resolveLegacyGatewayLaunchAgentLabels(process.env.MOLTBOT_PROFILE).includes(label)
   );
 }
 

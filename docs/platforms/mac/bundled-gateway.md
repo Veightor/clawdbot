@@ -26,7 +26,7 @@ The macOS app’s **Install CLI** button runs the same flow via npm/pnpm (bun no
 ## Launchd (Gateway as LaunchAgent)
 
 Label:
-- `bot.molt.gateway` (or `bot.molt.<profile>`; legacy `com.clawdbot.*` may remain)
+- `bot.molt.gateway` (or `bot.molt.<profile>`; legacy `com.moltbot.*` may remain)
 
 Plist location (per‑user):
 - `~/Library/LaunchAgents/bot.molt.gateway.plist`
@@ -55,8 +55,8 @@ incompatible, update the global CLI to match the app version.
 ```bash
 moltbot --version
 
-CLAWDBOT_SKIP_CHANNELS=1 \
-CLAWDBOT_SKIP_CANVAS_HOST=1 \
+MOLTBOT_SKIP_CHANNELS=1 \
+MOLTBOT_SKIP_CANVAS_HOST=1 \
 moltbot gateway --port 18999 --bind loopback
 ```
 

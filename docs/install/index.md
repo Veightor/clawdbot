@@ -142,12 +142,12 @@ Common flags:
 
 Equivalent env vars (useful for automation):
 
-- `CLAWDBOT_INSTALL_METHOD=git|npm`
-- `CLAWDBOT_GIT_DIR=...`
-- `CLAWDBOT_GIT_UPDATE=0|1`
-- `CLAWDBOT_NO_PROMPT=1`
-- `CLAWDBOT_DRY_RUN=1`
-- `CLAWDBOT_NO_ONBOARD=1`
+- `MOLTBOT_INSTALL_METHOD=git|npm`
+- `MOLTBOT_GIT_DIR=...`
+- `MOLTBOT_GIT_UPDATE=0|1`
+- `MOLTBOT_NO_PROMPT=1`
+- `MOLTBOT_DRY_RUN=1`
+- `MOLTBOT_NO_ONBOARD=1`
 - `SHARP_IGNORE_GLOBAL_LIBVIPS=0|1` (default: `1`; avoids `sharp` building against system libvips)
 
 ## Troubleshooting: `moltbot` not found (PATH)

@@ -60,7 +60,7 @@ offers to create one.
 When you switch channels explicitly (`--channel ...`), Moltbot also keeps the
 install method aligned:
 
-- `dev` → ensures a git checkout (default: `~/moltbot`, override with `CLAWDBOT_GIT_DIR`),
+- `dev` → ensures a git checkout (default: `~/moltbot`, override with `MOLTBOT_GIT_DIR`),
   updates it, and installs the global CLI from that checkout.
 - `stable`/`beta` → installs from npm using the matching dist-tag.
 

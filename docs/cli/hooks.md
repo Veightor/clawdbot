@@ -119,7 +119,7 @@ Not ready: 0
 moltbot hooks enable <name>
 ```
 
-Enable a specific hook by adding it to your config (`~/.clawdbot/config.json`).
+Enable a specific hook by adding it to your config (`~/.moltbot/config.json`).
 
 **Note:** Hooks managed by plugins show `plugin:<id>` in `moltbot hooks list` and
 can’t be enabled/disabled here. Enable/disable the plugin instead.
@@ -182,7 +182,7 @@ moltbot hooks install <path-or-spec>
 Install a hook pack from a local folder/archive or npm.
 
 **What it does:**
-- Copies the hook pack into `~/.clawdbot/hooks/<id>`
+- Copies the hook pack into `~/.moltbot/hooks/<id>`
 - Enables the installed hooks in `hooks.internal.entries.*`
 - Records the install under `hooks.internal.installs`
 
@@ -246,19 +246,19 @@ Logs all command events to a centralized audit file.
 moltbot hooks enable command-logger
 ```
 
-**Output:** `~/.clawdbot/logs/commands.log`
+**Output:** `~/.moltbot/logs/commands.log`
 
 **View logs:**
 
 ```bash
 # Recent commands
-tail -n 20 ~/.clawdbot/logs/commands.log
+tail -n 20 ~/.moltbot/logs/commands.log
 
 # Pretty-print
-cat ~/.clawdbot/logs/commands.log | jq .
+cat ~/.moltbot/logs/commands.log | jq .
 
 # Filter by action
-grep '"action":"new"' ~/.clawdbot/logs/commands.log | jq .
+grep '"action":"new"' ~/.moltbot/logs/commands.log | jq .
 ```
 
 **See:** [command-logger documentation](/hooks#command-logger)

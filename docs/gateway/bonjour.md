@@ -44,13 +44,13 @@ moltbot dns setup --apply
 
 This installs CoreDNS and configures it to:
 - listen on port 53 only on the gateway’s Tailscale interfaces
-- serve `moltbot.internal.` from `~/.clawdbot/dns/moltbot.internal.db`
+- serve `moltbot.internal.` from `~/.moltbot/dns/moltbot.internal.db`
 
 Validate from a tailnet‑connected machine:
 
 ```bash
 dns-sd -B _moltbot-gw._tcp moltbot.internal.
-dig @<TAILNET_IPV4> -p 53 _moltbot-gw._tcp.clawdbot.internal PTR +short
+dig @<TAILNET_IPV4> -p 53 _moltbot-gw._tcp.moltbot.internal PTR +short
 ```
 
 ### Tailscale DNS settings
@@ -69,7 +69,7 @@ The Gateway WS port (default `18789`) binds to loopback by default. For LAN/tail
 access, bind explicitly and keep auth enabled.
 
 For tailnet‑only setups:
-- Set `gateway.bind: "tailnet"` in `~/.clawdbot/moltbot.json`.
+- Set `gateway.bind: "tailnet"` in `~/.moltbot/moltbot.json`.
 - Restart the Gateway (or restart the macOS menubar app).
 
 ## What advertises
@@ -150,11 +150,11 @@ sequences (e.g. spaces become `\032`).
 
 ## Disabling / configuration
 
-- `CLAWDBOT_DISABLE_BONJOUR=1` disables advertising.
-- `gateway.bind` in `~/.clawdbot/moltbot.json` controls the Gateway bind mode.
-- `CLAWDBOT_SSH_PORT` overrides the SSH port advertised in TXT.
-- `CLAWDBOT_TAILNET_DNS` publishes a MagicDNS hint in TXT.
-- `CLAWDBOT_CLI_PATH` overrides the advertised CLI path.
+- `MOLTBOT_DISABLE_BONJOUR=1` disables advertising.
+- `gateway.bind` in `~/.moltbot/moltbot.json` controls the Gateway bind mode.
+- `MOLTBOT_SSH_PORT` overrides the SSH port advertised in TXT.
+- `MOLTBOT_TAILNET_DNS` publishes a MagicDNS hint in TXT.
+- `MOLTBOT_CLI_PATH` overrides the advertised CLI path.
 
 ## Related docs
 

@@ -9,7 +9,7 @@ read_when:
 The workspace is the agent's home. It is the only working directory used for
 file tools and for workspace context. Keep it private and treat it as memory.
 
-This is separate from `~/.clawdbot/`, which stores config, credentials, and
+This is separate from `~/.moltbot/`, which stores config, credentials, and
 sessions.
 
 **Important:** the workspace is the **default cwd**, not a hard sandbox. Tools
@@ -17,14 +17,14 @@ resolve relative paths against the workspace, but absolute paths can still reach
 elsewhere on the host unless sandboxing is enabled. If you need isolation, use
 [`agents.defaults.sandbox`](/gateway/sandboxing) (and/or per‑agent sandbox config).
 When sandboxing is enabled and `workspaceAccess` is not `"rw"`, tools operate
-inside a sandbox workspace under `~/.clawdbot/sandboxes`, not your host workspace.
+inside a sandbox workspace under `~/.moltbot/sandboxes`, not your host workspace.
 
 ## Default location
 
 - Default: `~/clawd`
-- If `CLAWDBOT_PROFILE` is set and not `"default"`, the default becomes
+- If `MOLTBOT_PROFILE` is set and not `"default"`, the default becomes
   `~/clawd-<profile>`.
-- Override in `~/.clawdbot/moltbot.json`:
+- Override in `~/.moltbot/moltbot.json`:
 
 ```json5
 {
@@ -120,12 +120,12 @@ files.
 
 ## What is NOT in the workspace
 
-These live under `~/.clawdbot/` and should NOT be committed to the workspace repo:
+These live under `~/.moltbot/` and should NOT be committed to the workspace repo:
 
-- `~/.clawdbot/moltbot.json` (config)
-- `~/.clawdbot/credentials/` (OAuth tokens, API keys)
-- `~/.clawdbot/agents/<agentId>/sessions/` (session transcripts + metadata)
-- `~/.clawdbot/skills/` (managed skills)
+- `~/.moltbot/moltbot.json` (config)
+- `~/.moltbot/credentials/` (OAuth tokens, API keys)
+- `~/.moltbot/agents/<agentId>/sessions/` (session transcripts + metadata)
+- `~/.moltbot/skills/` (managed skills)
 
 If you need to migrate sessions or config, copy them separately and keep them
 out of version control.
@@ -199,11 +199,11 @@ git push
 Even in a private repo, avoid storing secrets in the workspace:
 
 - API keys, OAuth tokens, passwords, or private credentials.
-- Anything under `~/.clawdbot/`.
+- Anything under `~/.moltbot/`.
 - Raw dumps of chats or sensitive attachments.
 
 If you must store sensitive references, use placeholders and keep the real
-secret elsewhere (password manager, environment variables, or `~/.clawdbot/`).
+secret elsewhere (password manager, environment variables, or `~/.moltbot/`).
 
 Suggested `.gitignore` starter:
 
@@ -218,9 +218,9 @@ Suggested `.gitignore` starter:
 ## Moving the workspace to a new machine
 
 1. Clone the repo to the desired path (default `~/clawd`).
-2. Set `agents.defaults.workspace` to that path in `~/.clawdbot/moltbot.json`.
+2. Set `agents.defaults.workspace` to that path in `~/.moltbot/moltbot.json`.
 3. Run `moltbot setup --workspace <path>` to seed any missing files.
-4. If you need sessions, copy `~/.clawdbot/agents/<agentId>/sessions/` from the
+4. If you need sessions, copy `~/.moltbot/agents/<agentId>/sessions/` from the
    old machine separately.
 
 ## Advanced notes

@@ -282,7 +282,7 @@ class MoltbotA2UIHost extends LitElement {
       getSurfaces: () => Array.from(this.#processor.getSurfaces().keys()),
     };
     globalThis.moltbotA2UI = api;
-    globalThis.clawdbotA2UI = api;
+    globalThis.moltbotA2UI = api;
     this.addEventListener("a2uiaction", (evt) => this.#handleA2UIAction(evt));
     this.#statusListener = (evt) => this.#handleActionStatus(evt);
     globalThis.addEventListener("moltbot:a2ui-action-status", this.#statusListener);
@@ -399,15 +399,15 @@ class MoltbotA2UIHost extends LitElement {
 
     const handler =
       globalThis.webkit?.messageHandlers?.moltbotCanvasA2UIAction ??
-      globalThis.webkit?.messageHandlers?.clawdbotCanvasA2UIAction ??
+      globalThis.webkit?.messageHandlers?.moltbotCanvasA2UIAction ??
       globalThis.moltbotCanvasA2UIAction ??
-      globalThis.clawdbotCanvasA2UIAction;
+      globalThis.moltbotCanvasA2UIAction;
     if (handler?.postMessage) {
       try {
         // WebKit message handlers support structured objects; Android's JS interface expects strings.
         if (
           handler === globalThis.moltbotCanvasA2UIAction ||
-          handler === globalThis.clawdbotCanvasA2UIAction
+          handler === globalThis.moltbotCanvasA2UIAction
         ) {
           handler.postMessage(JSON.stringify({ userAction }));
         } else {

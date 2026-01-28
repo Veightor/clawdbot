@@ -91,12 +91,12 @@ Moltbot scans, in order:
 - `plugins.load.paths` (file or directory)
 
 2) Workspace extensions
-- `<workspace>/.clawdbot/extensions/*.ts`
-- `<workspace>/.clawdbot/extensions/*/index.ts`
+- `<workspace>/.moltbot/extensions/*.ts`
+- `<workspace>/.moltbot/extensions/*/index.ts`
 
 3) Global extensions
-- `~/.clawdbot/extensions/*.ts`
-- `~/.clawdbot/extensions/*/index.ts`
+- `~/.moltbot/extensions/*.ts`
+- `~/.moltbot/extensions/*/index.ts`
 
 4) Bundled extensions (shipped with Moltbot, **disabled by default**)
 - `<moltbot>/extensions/*`
@@ -164,11 +164,11 @@ Example:
 
 Moltbot can also merge **external channel catalogs** (for example, an MPM
 registry export). Drop a JSON file at one of:
-- `~/.clawdbot/mpm/plugins.json`
-- `~/.clawdbot/mpm/catalog.json`
-- `~/.clawdbot/plugins/catalog.json`
+- `~/.moltbot/mpm/plugins.json`
+- `~/.moltbot/mpm/catalog.json`
+- `~/.moltbot/plugins/catalog.json`
 
-Or point `CLAWDBOT_PLUGIN_CATALOG_PATHS` (or `CLAWDBOT_MPM_CATALOG_PATHS`) at
+Or point `MOLTBOT_PLUGIN_CATALOG_PATHS` (or `MOLTBOT_MPM_CATALOG_PATHS`) at
 one or more JSON files (comma/semicolon/`PATH`-delimited). Each file should
 contain `{ "entries": [ { "name": "@scope/pkg", "moltbot": { "channel": {...}, "install": {...} } } ] }`.
 
@@ -271,7 +271,7 @@ Example:
 ```bash
 moltbot plugins list
 moltbot plugins info <id>
-moltbot plugins install <path>                 # copy a local file/dir into ~/.clawdbot/extensions/<id>
+moltbot plugins install <path>                 # copy a local file/dir into ~/.moltbot/extensions/<id>
 moltbot plugins install ./extensions/voice-call # relative path ok
 moltbot plugins install ./plugin.tgz           # install from a local tarball
 moltbot plugins install ./plugin.zip           # install from a local zip
@@ -605,7 +605,7 @@ Publishing contract:
 
 - Plugin `package.json` must include `moltbot.extensions` with one or more entry files.
 - Entry files can be `.js` or `.ts` (jiti loads TS at runtime).
-- `moltbot plugins install <npm-spec>` uses `npm pack`, extracts into `~/.clawdbot/extensions/<id>/`, and enables it in config.
+- `moltbot plugins install <npm-spec>` uses `npm pack`, extracts into `~/.moltbot/extensions/<id>/`, and enables it in config.
 - Config key stability: scoped packages are normalized to the **unscoped** id for `plugins.entries.*`.
 
 ## Example plugin: Voice Call

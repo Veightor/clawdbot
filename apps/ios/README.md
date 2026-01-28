@@ -1,4 +1,4 @@
-# Clawdbot (iOS)
+# moltbot (iOS)
 
 Internal-only SwiftUI app scaffold.
 
@@ -11,7 +11,7 @@ brew install swiftformat swiftlint
 ```bash
 cd apps/ios
 xcodegen generate
-open Clawdbot.xcodeproj
+open moltbot.xcodeproj
 ```
 
 ## Shared packages

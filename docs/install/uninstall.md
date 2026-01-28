@@ -43,10 +43,10 @@ moltbot gateway uninstall
 3) Delete state + config:
 
 ```bash
-rm -rf "${CLAWDBOT_STATE_DIR:-$HOME/.clawdbot}"
+rm -rf "${MOLTBOT_STATE_DIR:-$HOME/.moltbot}"
 ```
 
-If you set `CLAWDBOT_CONFIG_PATH` to a custom location outside the state dir, delete that file too.
+If you set `MOLTBOT_CONFIG_PATH` to a custom location outside the state dir, delete that file too.
 
 4) Delete your workspace (optional, removes agent files):
 
@@ -69,7 +69,7 @@ rm -rf /Applications/Moltbot.app
 ```
 
 Notes:
-- If you used profiles (`--profile` / `CLAWDBOT_PROFILE`), repeat step 3 for each state dir (defaults are `~/.clawdbot-<profile>`).
+- If you used profiles (`--profile` / `MOLTBOT_PROFILE`), repeat step 3 for each state dir (defaults are `~/.moltbot-<profile>`).
 - In remote mode, the state dir lives on the **gateway host**, so run steps 1-4 there too.
 
 ## Manual service removal (CLI not installed)
@@ -78,14 +78,14 @@ Use this if the gateway service keeps running but `moltbot` is missing.
 
 ### macOS (launchd)
 
-Default label is `bot.molt.gateway` (or `bot.molt.<profile>`; legacy `com.clawdbot.*` may still exist):
+Default label is `bot.molt.gateway` (or `bot.molt.<profile>`; legacy `com.moltbot.*` may still exist):
 
 ```bash
 launchctl bootout gui/$UID/bot.molt.gateway
 rm -f ~/Library/LaunchAgents/bot.molt.gateway.plist
 ```
 
-If you used a profile, replace the label and plist name with `bot.molt.<profile>`. Remove any legacy `com.clawdbot.*` plists if present.
+If you used a profile, replace the label and plist name with `bot.molt.<profile>`. Remove any legacy `com.moltbot.*` plists if present.
 
 ### Linux (systemd user unit)
 
@@ -104,10 +104,10 @@ The task script lives under your state dir.
 
 ```powershell
 schtasks /Delete /F /TN "Moltbot Gateway"
-Remove-Item -Force "$env:USERPROFILE\.clawdbot\gateway.cmd"
+Remove-Item -Force "$env:USERPROFILE\.moltbot\gateway.cmd"
 ```
 
-If you used a profile, delete the matching task name and `~\.clawdbot-<profile>\gateway.cmd`.
+If you used a profile, delete the matching task name and `~\.moltbot-<profile>\gateway.cmd`.
 
 ## Normal install vs source checkout
 

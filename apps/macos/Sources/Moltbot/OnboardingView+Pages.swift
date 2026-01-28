@@ -388,7 +388,7 @@ extension OnboardingView {
 
                 Text(
                     "This lets Moltbot use Claude immediately. Credentials are stored at " +
-                        "`~/.clawdbot/credentials/oauth.json` (owner-only).")
+                        "`~/.moltbot/credentials/oauth.json` (owner-only).")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -663,7 +663,7 @@ extension OnboardingView {
                                     let saved = await self.saveAgentWorkspace(AgentWorkspace.displayPath(for: url))
                                     if saved {
                                         self.workspaceStatus =
-                                            "Saved to ~/.clawdbot/moltbot.json (agents.defaults.workspace)"
+                                            "Saved to ~/.moltbot/moltbot.json (agents.defaults.workspace)"
                                     }
                                 }
                             }
@@ -732,7 +732,7 @@ extension OnboardingView {
                         title: "Remote gateway checklist",
                         subtitle: """
                         On your gateway host: install/update the `moltbot` package and make sure credentials exist
-                        (typically `~/.clawdbot/credentials/oauth.json`). Then connect again if needed.
+                        (typically `~/.moltbot/credentials/oauth.json`). Then connect again if needed.
                         """,
                         systemImage: "network")
                     Divider()

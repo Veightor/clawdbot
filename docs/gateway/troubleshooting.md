@@ -25,7 +25,7 @@ Quick triage commands (in order):
 | `moltbot gateway status` | Supervisor state (launchd/systemd/schtasks), runtime PID/exit, last gateway error | When the service “looks loaded” but nothing runs |
 | `moltbot logs --follow` | Live logs (best signal for runtime issues) | When you need the actual failure reason |
 
-**Sharing output:** prefer `moltbot status --all` (it redacts tokens). If you paste `moltbot status`, consider setting `CLAWDBOT_SHOW_SECRETS=0` first (token previews).
+**Sharing output:** prefer `moltbot status --all` (it redacts tokens). If you paste `moltbot status`, consider setting `MOLTBOT_SHOW_SECRETS=0` first (token previews).
 
 See also: [Health checks](/gateway/health) and [Logging](/logging).
 
@@ -106,7 +106,7 @@ Doctor/service will show runtime state (PID/last exit) and log hints.
 **Logs:**
 - Preferred: `moltbot logs --follow`
 - File logs (always): `/tmp/moltbot/moltbot-YYYY-MM-DD.log` (or your configured `logging.file`)
-- macOS LaunchAgent (if installed): `$CLAWDBOT_STATE_DIR/logs/gateway.log` and `gateway.err.log`
+- macOS LaunchAgent (if installed): `$MOLTBOT_STATE_DIR/logs/gateway.log` and `gateway.err.log`
 - Linux systemd (if installed): `journalctl --user -u moltbot-gateway[-<profile>].service -n 200 --no-pager`
 - Windows: `schtasks /Query /TN "Moltbot Gateway (<profile>)" /V /FO LIST`
 
@@ -159,7 +159,7 @@ The gateway service runs with a **minimal PATH** to avoid shell/manager cruft:
 
 This intentionally excludes version managers (nvm/fnm/volta/asdf) and package
 managers (pnpm/npm) because the service does not load your shell init. Runtime
-variables like `DISPLAY` should live in `~/.clawdbot/.env` (loaded early by the
+variables like `DISPLAY` should live in `~/.moltbot/.env` (loaded early by the
 gateway).
 Exec runs on `host=gateway` merge your login-shell `PATH` into the exec environment,
 so missing tools usually mean your shell init isn’t exporting them (or set
@@ -195,14 +195,14 @@ the Gateway likely refused to bind.
 - If you set `gateway.mode=remote`, the **CLI defaults** to a remote URL. The service can still be running locally, but your CLI may be probing the wrong place. Use `moltbot gateway status` to see the service’s resolved port + probe target (or pass `--url`).
 - `moltbot gateway status` and `moltbot doctor` surface the **last gateway error** from logs when the service looks running but the port is closed.
 - Non-loopback binds (`lan`/`tailnet`/`custom`, or `auto` when loopback is unavailable) require auth:
-  `gateway.auth.token` (or `CLAWDBOT_GATEWAY_TOKEN`).
+  `gateway.auth.token` (or `MOLTBOT_GATEWAY_TOKEN`).
 - `gateway.remote.token` is for remote CLI calls only; it does **not** enable local auth.
 - `gateway.token` is ignored; use `gateway.auth.token`.
 
 **If `moltbot gateway status` shows a config mismatch**
 - `Config (cli): ...` and `Config (service): ...` should normally match.
 - If they don’t, you’re almost certainly editing one config while the service is running another.
-- Fix: rerun `moltbot gateway install --force` from the same `--profile` / `CLAWDBOT_STATE_DIR` you want the service to use.
+- Fix: rerun `moltbot gateway install --force` from the same `--profile` / `MOLTBOT_STATE_DIR` you want the service to use.
 
 **If `moltbot gateway status` reports service config issues**
 - The supervisor config (launchd/systemd/schtasks) is missing current defaults.
@@ -210,7 +210,7 @@ the Gateway likely refused to bind.
 
 **If `Last gateway error:` mentions “refusing to bind … without auth”**
 - You set `gateway.bind` to a non-loopback mode (`lan`/`tailnet`/`custom`, or `auto` when loopback is unavailable) but didn’t configure auth.
-- Fix: set `gateway.auth.mode` + `gateway.auth.token` (or export `CLAWDBOT_GATEWAY_TOKEN`) and restart the service.
+- Fix: set `gateway.auth.mode` + `gateway.auth.token` (or export `MOLTBOT_GATEWAY_TOKEN`) and restart the service.
 
 **If `moltbot gateway status` says `bind=tailnet` but no tailnet interface was found**
 - The gateway tried to bind to a Tailscale IP (100.64.0.0/10) but none were detected on the host.
@@ -243,7 +243,7 @@ only one workspace is active.
 
 ### Main chat running in a sandbox workspace
 
-Symptoms: `pwd` or file tools show `~/.clawdbot/sandboxes/...` even though you
+Symptoms: `pwd` or file tools show `~/.moltbot/sandboxes/...` even though you
 expected the host workspace.
 
 **Why:** `agents.defaults.sandbox.mode: "non-main"` keys off `session.mainKey` (default `"main"`).
@@ -292,7 +292,7 @@ Look for `AllowFrom: ...` in the output.
 # The message must match mentionPatterns or explicit mentions; defaults live in channel groups/guilds.
 # Multi-agent: `agents.list[].groupChat.mentionPatterns` overrides global patterns.
 grep -n "agents\\|groupChat\\|mentionPatterns\\|channels\\.whatsapp\\.groups\\|channels\\.telegram\\.groups\\|channels\\.imessage\\.groups\\|channels\\.discord\\.guilds" \
-  "${CLAWDBOT_CONFIG_PATH:-$HOME/.clawdbot/moltbot.json}"
+  "${MOLTBOT_CONFIG_PATH:-$HOME/.moltbot/moltbot.json}"
 ```
 
 **Check 3:** Check the logs
@@ -332,7 +332,7 @@ Known issue: When you send an image with ONLY a mention (no other text), WhatsAp
 
 **Check 1:** Is the session file there?
 ```bash
-ls -la ~/.clawdbot/agents/<agentId>/sessions/
+ls -la ~/.moltbot/agents/<agentId>/sessions/
 ```
 
 **Check 2:** Is the reset window too short?
@@ -386,7 +386,7 @@ If you’re logged out / unlinked:
 
 ```bash
 moltbot channels logout
-trash "${CLAWDBOT_STATE_DIR:-$HOME/.clawdbot}/credentials" # if logout can't cleanly remove everything
+trash "${MOLTBOT_STATE_DIR:-$HOME/.moltbot}/credentials" # if logout can't cleanly remove everything
 moltbot channels login --verbose       # re-scan QR
 ```
 
@@ -591,7 +591,7 @@ If the gateway is supervised by launchd, killing the PID will just respawn it. S
 ```bash
 moltbot gateway status
 moltbot gateway stop
-# Or: launchctl bootout gui/$UID/bot.molt.gateway (replace with bot.molt.<profile>; legacy com.clawdbot.* still works)
+# Or: launchctl bootout gui/$UID/bot.molt.gateway (replace with bot.molt.<profile>; legacy com.moltbot.* still works)
 ```
 
 **Fix 2: Port is busy (find the listener)**
@@ -619,7 +619,7 @@ Get verbose logging:
 
 ```bash
 # Turn on trace logging in config:
-#   ${CLAWDBOT_CONFIG_PATH:-$HOME/.clawdbot/moltbot.json} -> { logging: { level: "trace" } }
+#   ${MOLTBOT_CONFIG_PATH:-$HOME/.moltbot/moltbot.json} -> { logging: { level: "trace" } }
 #
 # Then run verbose commands to mirror debug output to stdout:
 moltbot gateway --verbose
@@ -631,10 +631,10 @@ moltbot channels login --verbose
 | Log | Location |
 |-----|----------|
 | Gateway file logs (structured) | `/tmp/moltbot/moltbot-YYYY-MM-DD.log` (or `logging.file`) |
-| Gateway service logs (supervisor) | macOS: `$CLAWDBOT_STATE_DIR/logs/gateway.log` + `gateway.err.log` (default: `~/.clawdbot/logs/...`; profiles use `~/.clawdbot-<profile>/logs/...`)<br />Linux: `journalctl --user -u moltbot-gateway[-<profile>].service -n 200 --no-pager`<br />Windows: `schtasks /Query /TN "Moltbot Gateway (<profile>)" /V /FO LIST` |
-| Session files | `$CLAWDBOT_STATE_DIR/agents/<agentId>/sessions/` |
-| Media cache | `$CLAWDBOT_STATE_DIR/media/` |
-| Credentials | `$CLAWDBOT_STATE_DIR/credentials/` |
+| Gateway service logs (supervisor) | macOS: `$MOLTBOT_STATE_DIR/logs/gateway.log` + `gateway.err.log` (default: `~/.moltbot/logs/...`; profiles use `~/.moltbot-<profile>/logs/...`)<br />Linux: `journalctl --user -u moltbot-gateway[-<profile>].service -n 200 --no-pager`<br />Windows: `schtasks /Query /TN "Moltbot Gateway (<profile>)" /V /FO LIST` |
+| Session files | `$MOLTBOT_STATE_DIR/agents/<agentId>/sessions/` |
+| Media cache | `$MOLTBOT_STATE_DIR/media/` |
+| Credentials | `$MOLTBOT_STATE_DIR/credentials/` |
 
 ## Health Check
 
@@ -667,7 +667,7 @@ moltbot gateway stop
 # If you installed a service and want a clean install:
 # moltbot gateway uninstall
 
-trash "${CLAWDBOT_STATE_DIR:-$HOME/.clawdbot}"
+trash "${MOLTBOT_STATE_DIR:-$HOME/.moltbot}"
 moltbot channels login         # re-pair WhatsApp
 moltbot gateway restart           # or: moltbot gateway
 ```

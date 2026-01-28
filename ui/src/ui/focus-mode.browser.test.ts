@@ -15,14 +15,14 @@ beforeEach(() => {
   MoltbotApp.prototype.connect = () => {
     // no-op: avoid real gateway WS connections in browser tests
   };
-  window.__CLAWDBOT_CONTROL_UI_BASE_PATH__ = undefined;
+  window.__MOLTBOT_CONTROL_UI_BASE_PATH__ = undefined;
   localStorage.clear();
   document.body.innerHTML = "";
 });
 
 afterEach(() => {
   MoltbotApp.prototype.connect = originalConnect;
-  window.__CLAWDBOT_CONTROL_UI_BASE_PATH__ = undefined;
+  window.__MOLTBOT_CONTROL_UI_BASE_PATH__ = undefined;
   localStorage.clear();
   document.body.innerHTML = "";
 });

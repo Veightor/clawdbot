@@ -9,9 +9,9 @@ import Testing
         let baseDir = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
         let logDir = baseDir.appendingPathComponent("moltbot-tests-\(UUID().uuidString)")
 
-        setenv("CLAWDBOT_LOG_DIR", logDir.path, 1)
+        setenv("MOLTBOT_LOG_DIR", logDir.path, 1)
         defer {
-            unsetenv("CLAWDBOT_LOG_DIR")
+            unsetenv("MOLTBOT_LOG_DIR")
             try? fm.removeItem(at: logDir)
         }
 

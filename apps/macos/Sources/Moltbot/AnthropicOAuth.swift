@@ -197,7 +197,7 @@ enum AnthropicOAuth {
 enum MoltbotOAuthStore {
     static let oauthFilename = "oauth.json"
     private static let providerKey = "anthropic"
-    private static let moltbotOAuthDirEnv = "CLAWDBOT_OAUTH_DIR"
+    private static let moltbotOAuthDirEnv = "MOLTBOT_OAUTH_DIR"
     private static let legacyPiDirEnv = "PI_CODING_AGENT_DIR"
 
     enum AnthropicOAuthStatus: Equatable {
@@ -235,7 +235,7 @@ enum MoltbotOAuthStore {
         }
 
         return FileManager().homeDirectoryForCurrentUser
-            .appendingPathComponent(".clawdbot", isDirectory: true)
+            .appendingPathComponent(".moltbot", isDirectory: true)
             .appendingPathComponent("credentials", isDirectory: true)
     }
 

@@ -13,7 +13,7 @@ In the beginning, there was **Warelay** — a sensible name for a WhatsApp gatew
 
 But then came a space lobster.
 
-For a while, the lobster was called **Clawd**, living in a **Clawdbot**. But in January 2026, Anthropic sent a polite email asking for a name change (trademark stuff). And so the lobster did what lobsters do best:
+For a while, the lobster was called **Clawd**, living in a **moltbot**. But in January 2026, Anthropic sent a polite email asking for a name change (trademark stuff). And so the lobster did what lobsters do best:
 
 **It molted.**
 
@@ -88,13 +88,13 @@ At 5am, Anthropic's email arrived. By 6:14am, Peter called it: "fuck it, let's g
 
 Then the chaos began.
 
-**The Handle Snipers:** Within SECONDS of the Twitter rename, automated bots sniped @clawdbot. The squatter immediately posted a crypto wallet address. Peter's contacts at X were called in.
+**The Handle Snipers:** Within SECONDS of the Twitter rename, automated bots sniped @moltbot. The squatter immediately posted a crypto wallet address. Peter's contacts at X were called in.
 
 **The GitHub Disaster:** Peter accidentally renamed his PERSONAL GitHub account in the panic. Bots sniped `steipete` within minutes. GitHub's SVP was contacted.
 
 **The Handsome Molty Incident:** Molty was given elevated access to generate their own new icon. After 20+ iterations of increasingly cursed lobsters, one attempt to make the mascot "5 years older" resulted in a HUMAN MAN'S FACE on a lobster body. Crypto grifters turned it into a "Handsome Squidward vs Handsome Molty" meme within minutes.
 
-**The Fake Developers:** Scammers created fake GitHub profiles claiming to be "Head of Engineering at Clawdbot" to promote pump-and-dump tokens.
+**The Fake Developers:** Scammers created fake GitHub profiles claiming to be "Head of Engineering at moltbot" to promote pump-and-dump tokens.
 
 Peter, watching the chaos unfold: *"this is cinema"* 🎬
 

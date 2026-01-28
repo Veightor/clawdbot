@@ -55,7 +55,7 @@ If you run the installer while **already inside a Moltbot source checkout** (det
 - update and use this checkout (`git`)
 - or migrate to the global npm install (`npm`)
 
-In non-interactive contexts (no TTY / `--no-prompt`), you must pass `--install-method git|npm` (or set `CLAWDBOT_INSTALL_METHOD`), otherwise the script exits with code `2`.
+In non-interactive contexts (no TTY / `--no-prompt`), you must pass `--install-method git|npm` (or set `MOLTBOT_INSTALL_METHOD`), otherwise the script exits with code `2`.
 
 ### Why Git is needed
 
@@ -73,7 +73,7 @@ On some Linux setups (especially after installing Node via the system package ma
 
 ## install-cli.sh (non-root CLI installer)
 
-This script installs `moltbot` into a prefix (default: `~/.clawdbot`) and also installs a dedicated Node runtime under that prefix, so it can work on machines where you don’t want to touch the system Node/npm.
+This script installs `moltbot` into a prefix (default: `~/.moltbot`) and also installs a dedicated Node runtime under that prefix, so it can work on machines where you don’t want to touch the system Node/npm.
 
 Help:
 
@@ -107,8 +107,8 @@ iwr -useb https://molt.bot/install.ps1 | iex -InstallMethod git -GitDir "C:\\mol
 
 Environment variables:
 
-- `CLAWDBOT_INSTALL_METHOD=git|npm`
-- `CLAWDBOT_GIT_DIR=...`
+- `MOLTBOT_INSTALL_METHOD=git|npm`
+- `MOLTBOT_GIT_DIR=...`
 
 Git requirement:
 

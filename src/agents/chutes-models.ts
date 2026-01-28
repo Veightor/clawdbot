@@ -19,7 +19,7 @@ export async function fetchChutesModels(): Promise<ChutesModelEntry[]> {
   if (
     process.env.VITEST ||
     process.env.NODE_ENV === "test" ||
-    process.env.CLAWDBOT_SKIP_DYNAMIC_MODELS === "1"
+    process.env.MOLTBOT_SKIP_DYNAMIC_MODELS === "1"
   ) {
     return [];
   }

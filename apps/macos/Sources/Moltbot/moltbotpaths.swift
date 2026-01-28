@@ -14,15 +14,15 @@ enum MoltbotEnv {
 }
 
 enum MoltbotPaths {
-    private static let configPathEnv = "CLAWDBOT_CONFIG_PATH"
-    private static let stateDirEnv = "CLAWDBOT_STATE_DIR"
+    private static let configPathEnv = "MOLTBOT_CONFIG_PATH"
+    private static let stateDirEnv = "MOLTBOT_STATE_DIR"
 
     static var stateDirURL: URL {
         if let override = MoltbotEnv.path(self.stateDirEnv) {
             return URL(fileURLWithPath: override, isDirectory: true)
         }
         return FileManager().homeDirectoryForCurrentUser
-            .appendingPathComponent(".clawdbot", isDirectory: true)
+            .appendingPathComponent(".moltbot", isDirectory: true)
     }
 
     static var configURL: URL {

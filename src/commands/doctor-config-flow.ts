@@ -121,7 +121,7 @@ function noteOpencodeProviderOverrides(cfg: MoltbotConfig) {
 }
 
 function hasExplicitConfigPath(env: NodeJS.ProcessEnv): boolean {
-  return Boolean(env.MOLTBOT_CONFIG_PATH?.trim() || env.CLAWDBOT_CONFIG_PATH?.trim());
+  return Boolean(env.MOLTBOT_CONFIG_PATH?.trim() || env.MOLTBOT_CONFIG_PATH?.trim());
 }
 
 function moveLegacyConfigFile(legacyPath: string, canonicalPath: string) {
@@ -155,7 +155,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
   let snapshot = await readConfigFileSnapshot();
   if (!hasExplicitConfigPath(process.env) && snapshot.exists) {
     const basename = path.basename(snapshot.path);
-    if (basename === "clawdbot.json") {
+    if (basename === "moltbot.json") {
       const canonicalPath = path.join(path.dirname(snapshot.path), "moltbot.json");
       if (!fs.existsSync(canonicalPath)) {
         moveLegacyConfigFile(snapshot.path, canonicalPath);
